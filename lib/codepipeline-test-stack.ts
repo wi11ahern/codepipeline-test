@@ -11,7 +11,9 @@ export class PipelineStack extends Stack {
 
     const synthStep = new ShellStep("Synth", {
       input: CodePipelineSource.gitHub("wi11ahern/codepipeline-test", "main", {
-        authentication: SecretValue.secretsManager("GITHUB_TOKEN"),
+        authentication: SecretValue.secretsManager("GITHUB_TOKEN", {
+          jsonField: "GITHUB_TOKEN",
+        }),
       }),
       commands: ["npm ci", "npm run build", "npx cdk synth"],
       primaryOutputDirectory: "cdk.out",
