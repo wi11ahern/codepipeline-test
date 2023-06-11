@@ -20,10 +20,7 @@
     "typescript": "~5.0.4"
   },
   "dependencies": {
-    "@aws-cdk/aws-codepipeline": "^1.203.0",
-    "@aws-cdk/aws-codepipeline-actions": "^1.203.0",
-    "@aws-cdk/pipelines": "^1.203.0",
-    "aws-cdk-lib": "2.83.1",
+    "aws-cdk-lib": "*",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"
   }
