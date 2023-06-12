@@ -6,7 +6,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf ./build && rm -rf ./cdk.out && rm -rf ./cdk.context.json && rm -rf ./node_modules",
+    "clean": "rm -rf ./build && rm -rf ./cdk.out && rm -rf ./cdk.context.json",
+    "clean-all": "rm -rf ./build && rm -rf ./cdk.out && rm -rf ./cdk.context.json && rm -rf ./node_modules",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
