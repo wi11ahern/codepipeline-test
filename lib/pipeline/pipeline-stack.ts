@@ -1,9 +1,10 @@
-import { App, SecretValue, Stack, StackProps } from "aws-cdk-lib";
+import { App, SecretValue, Stack, StackProps, Stage } from "aws-cdk-lib";
 import {
   CodePipeline,
   CodePipelineSource,
   ShellStep,
 } from "aws-cdk-lib/pipelines";
+import { PersonalEc2DeploymentStage } from "./personal-ec2-deployment-stage";
 
 export class PipelineStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
@@ -23,5 +24,7 @@ export class PipelineStack extends Stack {
       pipelineName: "Codepipeline-Test",
       synth: synthStep,
     });
+
+    pipeline.addStage(new PersonalEc2DeploymentStage(this, "Deploy"));
   }
 }

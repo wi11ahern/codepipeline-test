@@ -11,9 +11,10 @@ import {
   Vpc,
 } from "aws-cdk-lib/aws-ec2";
 import { Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import { Construct } from "constructs";
 
 export class PersonalEc2Stack extends Stack {
-  constructor(scope: App, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
     const defaultVpc = Vpc.fromLookup(this, "DefaultVpc", {
