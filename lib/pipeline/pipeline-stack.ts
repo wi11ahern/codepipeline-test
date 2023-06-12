@@ -5,7 +5,7 @@ import {
   ShellStep,
 } from "aws-cdk-lib/pipelines";
 import { PersonalEc2DeploymentStage } from "./personal-ec2-deployment-stage";
-import { Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import { PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 
 export class PipelineStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
@@ -33,6 +33,14 @@ export class PipelineStack extends Stack {
       pipelineName: "Codepipeline-Test",
       role: pipelineRole,
       synth: synthStep,
+      codeBuildDefaults: {
+        rolePolicy: [
+          new PolicyStatement({
+            actions: ["ssm:GetParameter"],
+            resources: ["*"],
+          }),
+        ],
+      },
     });
 
     pipeline.addStage(new PersonalEc2DeploymentStage(this, "Deploy", props));
