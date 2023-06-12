@@ -25,6 +25,6 @@ export class PipelineStack extends Stack {
       synth: synthStep,
     });
 
-    pipeline.addStage(new PersonalEc2DeploymentStage(this, "Deploy"));
+    pipeline.addStage(new PersonalEc2DeploymentStage(this, "Deploy", props));
   }
 }
