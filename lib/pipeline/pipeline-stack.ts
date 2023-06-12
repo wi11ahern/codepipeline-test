@@ -1,14 +1,23 @@
-import { App, SecretValue, Stack, StackProps, Stage } from "aws-cdk-lib";
+import { App, SecretValue, Stack, StackProps } from "aws-cdk-lib";
 import {
   CodePipeline,
   CodePipelineSource,
   ShellStep,
 } from "aws-cdk-lib/pipelines";
 import { PersonalEc2DeploymentStage } from "./personal-ec2-deployment-stage";
+import { Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 
 export class PipelineStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
     super(scope, id, props);
+
+    const pipelineRole = new Role(this, "PipelineRole", {
+      roleName: "PipelineRole",
+      assumedBy: new ServicePrincipal("codepipeline.amazonaws.com"),
+    });
+    pipelineRole.addManagedPolicy({
+      managedPolicyArn: "arn:aws:iam::aws:policy/AdministratorAccess",
+    });
 
     const synthStep = new ShellStep("Synth", {
       input: CodePipelineSource.gitHub("wi11ahern/codepipeline-test", "main", {
@@ -22,6 +31,7 @@ export class PipelineStack extends Stack {
 
     const pipeline = new CodePipeline(this, "MyPipeline", {
       pipelineName: "Codepipeline-Test",
+      role: pipelineRole,
       synth: synthStep,
     });
 
